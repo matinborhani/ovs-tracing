@@ -1,0 +1,47 @@
+   Function                               Hit    Time            Avg            s^2
+  ovs_vport_receive                       59    1905.435 us     32.295 us       664.067 us  => بسته های دریافتی از طریق پورت را مدیریت میکند.
+  ovs_dp_process_packet                   59    1534.419 us     26.007 us       538.942 us  => پردازش بسته های شبکه در سطح دیتا پلین
+  ovs_execute_actions                     56    779.381 us      13.917 us       115.019 us  => مجموعه ای از عملیات را بر روی بسته های شبکه انجام میدهد.
+  ovs_vport_send                          56    643.210 us      11.485 us       104.574 us  => ارسال بسته از طریق پورت مجازی
+  ovs_flow_key_extract                    59    327.732 us      5.554 us        68.767 us   => استخراج کلید جریان از بسته
+  ovs_dp_upcall                            3    263.012 us      87.670 us       814.682 us  
+  ovs_flow_tbl_lookup_stats               59    224.935 us      3.812 us        23.828 us   => جمع اوری اطلاعات اماری مربوط به جدول جریان
+  ovs_ct_fill_key                         59    153.427 us      2.600 us        57.822 us   
+  ovs_dp_cmd_get                           5    137.178 us      27.435 us       58.508 us   
+  ovs_flow_cmd_dump                       10    89.117 us       8.911 us        84.438 us   
+  ovs_dp_cmd_fill_info                     5    77.885 us       15.577 us       18.880 us   
+  ovs_ct_update_key.isra.0                59    76.652 us       1.299 us        26.275 us   =>  مسئول بروزرسانی کلید پیگیری اتصال مرتبط با  یک جریان شبکه است.
+  ovs_flow_stats_update                   56    59.301 us       1.058 us        0.154 us    =>اطلاعات اماری جریان را برئوزرسانی میکند
+  __ovs_ct_update_key                     59    52.942 us       0.897 us        25.673 us   =>بروزرسانی کلید پیگیری اتصال برای جریان
+  ovs_vport_cmd_get                        5    52.734 us       10.546 us       13.707 us   
+  ovs_flow_cmd_fill_info                  16    46.741 us       2.921 us        3.758 us    
+  ovs_flow_tbl_dump_next                  25    32.344 us       1.293 us        2.609 us    
+  ovs_vport_cmd_fill_info                  5    30.069 us       6.013 us        6.847 us    
+  ovs_flow_cmd_fill_stats                 16    28.830 us       1.801 us        1.966 us    
+  ovs_nla_put_key                          3    22.003 us       7.334 us        0.967 us    
+  ovs_vport_get_stats                      5    21.897 us       4.379 us        5.329 us    
+  ovs_lookup_vport                        56    21.458 us       0.383 us        0.065 us    =>  پیدا کردن یا بازیابی پورت مجازی بلا استفاده از کلید داده شده
+  __ovs_nla_put_key                        3    18.348 us       6.116 us        0.806 us    
+  ovs_flow_cmd_del                         1    17.821 us       17.821 us       0.000 us    
+  ovs_flow_stats_get                      16    15.914 us       0.994 us        0.372 us    
+  ovs_nla_put_identifier                  16    8.572 us        0.535 us        0.108 us    
+  ovs_ct_put_key                           3    5.528 us        1.842 us        0.029 us    
+  ovs_flow_tbl_remove                      1    5.476 us        5.476 us        0.000 us    
+  ovs_flow_used_time                      10    5.471 us        0.547 us        0.177 us    
+  ovs_vport_locate                         5    3.511 us        0.702 us        0.099 us    
+  ovs_flow_tbl_num_masks                   5    3.206 us        0.641 us        0.070 us    
+  ovs_vport_get_upcall_portids             5    2.048 us        0.409 us        0.018 us    
+  ovs_vport_find_upcall_portid             3    2.027 us        0.675 us        0.003 us    
+  ovs_flow_cmd_alloc_info                  1    1.840 us        1.840 us        0.000 us    
+  ovs_internal_dev_get_vport              16    1.571 us        0.098 us        0.004 us    
+  ovs_nla_free_flow_actions                1    1.096 us        1.096 us        0.000 us    
+  ovs_flow_free                            1    1.044 us        1.044 us        0.000 us    
+  ovs_flow_tbl_lookup_ufid                 1    0.949 us        0.949 us        0.000 us    
+  ovs_nla_get_ufid_flags                  11    0.685 us        0.062 us        0.000 us    
+  ovs_key_attr_size                        3    0.569 us        0.189 us        0.004 us    
+  *ovs_flow_tbl_count                       5    0.508 us        0.101 us        0.007 us    
+  *ovs_vport_get_options                    5    0.309 us        0.061 us        0.001 us    
+  ovs_nla_get_ufid                         1    0.091 us        0.091 us        0.000 us   
+  
+  **
+  کلید اتصال شامل اتصالاعاتی مانند ادرس ایپی مبدا و مقصد، پورت های پروتکل انتقال و سایر هدرهای بسته است.

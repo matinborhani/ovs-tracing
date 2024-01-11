@@ -1,0 +1,15 @@
+  Function                               Hit    Time            Avg             s^2
+  ovs_dp_cmd_get                          34    1152.285 us     33.890 us       584.859 us  
+  ovs_dp_cmd_fill_info                    34    605.112 us      17.797 us       122.889 us  
+  ovs_vport_cmd_get                       12    333.405 us      27.783 us       257.455 us  
+  ovs_flow_cmd_dump                       34    238.639 us      7.018 us        37.219 us   
+  ovs_flow_tbl_dump_next                  34    159.803 us      4.700 us        8.508 us    
+  ovs_vport_cmd_fill_info                 12    135.357 us      11.279 us       33.786 us   
+  ovs_vport_get_stats                     12    75.448 us       6.287 us        22.311 us   
+  ovs_flow_tbl_num_masks                  34    23.193 us       0.682 us        0.066 us    
+  ovs_vport_locate                        12    21.812 us       1.817 us        0.825 us    
+  ovs_vport_get_upcall_portids            12    12.586 us       1.048 us        0.064 us    
+  ovs_internal_dev_get_vport              68    11.005 us       0.161 us        0.011 us    
+  ovs_nla_get_ufid_flags                  34    3.527 us        0.103 us        0.012 us    
+  *ovs_flow_tbl_count                      34    2.642 us        0.077 us        0.002 us    
+  *ovs_vport_get_options                   12    1.981 us        0.165 us        0.005 us  

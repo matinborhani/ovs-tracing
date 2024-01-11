@@ -1,0 +1,29 @@
+hamidreza@ubuntu:~/Desktop$ ip netns add VRF1
+mount --make-shared /run/netns failed: Operation not permitted
+hamidreza@ubuntu:~/Desktop$ sudo ip netns add VRF1
+[sudo] password for hamidreza: 
+hamidreza@ubuntu:~/Desktop$ sudo su -
+root@ubuntu:~# ip netns add VRF2
+root@ubuntu:~# ip link add veth1 type veth peer name veth2
+root@ubuntu:~# ip link add veth3 type veth peer name veth4
+root@ubuntu:~# ip link set veth1 netns VRF1
+root@ubuntu:~# ip link set veth3 netns VRF2
+root@ubuntu:~# ip netns exec VRF1 ifconfig veth1 10.10.10.1/24 up
+root@ubuntu:~# ip netns exec VRF2 ifconfig veth3 10.10.10.2/24 up
+root@ubuntu:~# ovs-vsctl add-br vSwitch1 
+root@ubuntu:~# ovs-vsctl add-port vSwitch1 veth2
+root@ubuntu:~# ovs-vsctl add-port vSwitch1 veth4
+
+root@ubuntu:~# ifconfig veth2 up
+root@ubuntu:~# ifconfig veth4 up
+root@ubuntu:~# ip netns exec VRF1 ping 10.10.10.2
+
+ ip netns exec VRF1 ping -s 65507 10.10.10.2
+sudo ip netns exec VRF1 nc -l 10.10.10.1 5000
+
+
+
+
+sudo perf stat -ae 'kprobes:*'
+
+sudo perf stat -ae 'kmem:*'
