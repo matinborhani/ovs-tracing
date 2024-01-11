@@ -89,6 +89,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 * Linux Machine (Native or Virtual Machine) (Linux Version 4.18 Or Above)
 * Install OVS from [Official Site](https://docs.openvswitch.org/en/latest/intro/install/general/)
+* [Perf](https://perf.wiki.kernel.org/index.php/Main_Page)
 * VS Code
 
 ## تنظیمات راه اندازی سناریوی پروژه OVS:
