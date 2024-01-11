@@ -1,21 +1,20 @@
 # ovs-tracing
 
 <div dir="rtl">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/arch.JPG" alt="Our Architecture" />
+  <figcaption>Architecture of OVS and Name spaces</figcaption>
+</figure>
 
-![image](https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/arch.JPG?raw=true)
+<p></p>
 
- |
-| --- |
-| سید حمیدرضا میریگانه
-متین برهانی  |
-| زمستان1402 |
 
 # قسمت اول: کلیات OVS
 
 ## توضیح مختصر در مورد OVS:
-
-Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع باز از یک سوئیچ چند لایه مجازی توزیع شده است. [هدف اصلی](https://en.wikipedia.org/wiki/Open_vSwitch)Open vSwitch ارائه یک پشته سوئیچ برای محیط‌های مجازی‌سازی سخت‌افزاری است، در حالی که از چندین پروتکل و استاندارد مورد استفاده در شبکه‌های کامپیوتری پشتیبانی می‌کند.
-
+<div dir="rtl">
+Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع باز از یک سوئیچ چند لایه مجازی  توزیع شده است هدف اصلی [Open vSwitch](https://en.wikipedia.org/wiki/Open_vSwitch)ارائه یک پشته سوئیچ برای محیط‌های مجازی‌سازی سخت‌افزاری است، در حالی که از چندین پروتکل و استاندارد مورد استفاده در شبکه‌های کامپیوتری پشتیبانی می‌کند.
+</div>
 ## نقاط قوت OVS:
 
 1. پشتیبانی از استانداردها: OVS از چندین پروتکل و استاندارد مورد استفاده در شبکه‌های کامپیوتری پشتیبانی می‌کند.
@@ -27,6 +26,16 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 1. پیچیدگی در پیکربندی
 2.  نیاز به دانش فنی خاص برای استفاده بهینه
 
+# قسمت دوم: معماری  OVS
+در این قسمت به بیان پیش نیازهایی که برای اجرای سناریوها نیاز است، پرداخته می ‏شود. در ادامه به معماری که طرح ریزی شده توضیحاتی ارائه می شود.‏
+
+## پیش نیازهای OVS
+پیش نیازهایی که برای اجرای سناریوها نیاز است عبارتند از: 
+
+* Linux Machine (Native or Virtual Machine) (Linux Version 4.18 Or Above)
+* Install OVS from [Official Site](https://docs.openvswitch.org/en/latest/intro/install/general/)
+* VS Code
+
 ## پیاده سازی OVS:
 
 در این قسمت به صورت مختصر، اقداماتی که در راستای ایجاد Switch مجازی شبکه انجام شد، شرح داده می‌شود.
@@ -36,39 +45,51 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 3. سپس Interface با نام veth1 را به Namespace VRF1 و veth3 را به Namespace VRF3 اختصاص دادیم.
 4. سپس به هر Interface یک IP منحصر به فرد در محدوده 10.10.10.255 اختصاص داده شد.
 
-![](RackMultipart20240109-1-uw5vs1_html_649a162bab100cca.png)
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/vrf1_ifconfig.png" alt="Interfaces of VRF1 " />
+  <figcaption>Interface های Namespace به نامVRF1</figcaption>
+</figure>
 
-تصویر 1: Interface های Namespace به نامVRF1
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/vrf2_ifconfig.png" alt="Interfaces of VRF2 " />
+  <figcaption>Interface‏ های ‏Namespace‏ به نامVRF2 ‎</figcaption>
+</figure>
 
-![](RackMultipart20240109-1-uw5vs1_html_b2973db2e0d0fad7.png)
 
-تصویر 2: ‏: ‏Interface‏ های ‏Namespace‏ به نامVRF2
+5. در ادامه با ایجاد یک Virtual Switch و ساخت Bridge بر روی آن، اقدام به برقراری ارتباط بین دو Namespace کردیم. 
 
-1. در ادامه با ایجاد یک Virtual Switch و ساخت Bridge بر روی آن، اقدام به برقراری ارتباط بین دو Namespace کردیم.
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/ovs-show.png" alt="OVS Show" />
+  <figcaption>مشاهده اطلاعات Switch مجازی تعریف شده</figcaption>
+</figure>
 
-![](RackMultipart20240109-1-uw5vs1_html_4c3668744a22ea5e.png)
 
-تصویر 3: مشاهده اطلاعات Switch مجازی تعریف شده
+6. برای مثال بین Namespace با نام VRF1 یک بسته ICMP به Namespace با نام VRF2 ارسال کردیم.
 
-1. برای مثال بین Namespace با نام VRF1 یک بسته ICMP به Namespace با نام VRF2 ارسال کردیم.
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ping_initial.png" alt="Send ICMP Packet from VRF1 to FRM2" />
+  <figcaption>ارسال بسته با استفاده از ‏Namespace‏ با نام ‏VRF1‎‏ به ‏VRF2‎‏ با آدرس 10.10.10.2‏</figcaption>
+</figure>
 
-![](RackMultipart20240109-1-uw5vs1_html_a15e3da698af593a.jpg)
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/ifconfig.JPG" alt="Interface of Machine" />
+  <figcaption>Interface‏ های ساخته شدهF1</figcaption>
+</figure>
 
-تصویر 4: ارسال بسته با استفاده از Namespace با نام VRF1 به VRF2 با آدرس 10.10.10.2
 
-![](RackMultipart20240109-1-uw5vs1_html_30b06e1bc3db8a0e.jpg)
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/namespace_commands.JPG" alt="Overview of Commands" />
+  <figcaption>نگاه کلی به دستورات</figcaption>
+</figure>
 
-تصویر 5: نگاه کلی به دستورات ساختن Name Space و Interface های مربوطه و برقراری ارتباط بین آن‌ها
-
-![](RackMultipart20240109-1-uw5vs1_html_5e2fef114ec7c474.jpg)
-
-تصویر6: Interface های ساخته شده
 
 ## معماری Namespace و OVS:
 
-![](RackMultipart20240109-1-uw5vs1_html_d6b417391def9311.png)
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/arch.JPG" alt="Architecture" />
+  <figcaption>معماری ‏OVS</figcaption>
+</figure>
 
-تصویر 7: معماری OVS
 
 # قسمت دوم: سناریوی Ping
 
@@ -150,4 +171,10 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 ![](RackMultipart20240109-1-uw5vs1_html_4d76a1a922519de2.png)
 
 تصویر 17:نقطه اتصال کرنل لینوکس به OVS\_MODULE
+
+ |
+| --- |
+| سید حمیدرضا میریگانه
+متین برهانی  |
+| زمستان1402 |
 </div>
