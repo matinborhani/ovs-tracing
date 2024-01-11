@@ -208,7 +208,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/perf_call_graph_vport_recievepng.png" alt="perf call graph vport recieving" />
   <figcaption><em>  
-نمودار call-graph برای رویداد ovs_vport_send
+نمودار call-graph برای رویداد ovs_vport_recieved
 </em></figcaption>
 </figure>
 </div>
@@ -277,6 +277,8 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
   
 ## رویداد ovs\_vport\_send:
 
+###  آنالیز این رویداد با دستور perf
+
 ابتدا اقدام به تهیه Call Stack با استفاده از دستور perf کردیم که دستور آن در تصویر پایین بدست آمد:
 
 <div dir="rtl" style: align="center">
@@ -285,21 +287,35 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
   <figcaption><em>دستور perf stat</em></figcaption>
 </figure>
 </div
+<p></p>
 
 در ادامه تصویری از نتایج بدست آمده نشان داده میشود.
 
-![](RackMultipart20240109-1-uw5vs1_html_4714f4a27dc845d.png)
-
-تصویر 15: نمایی از perf call graph
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/perf_call_graph_vport_send.png" alt="perf Command" />
+  <figcaption><em>نمودار call-graph برای رویداد ovs_vport_send</em></figcaption>
+</figure>
+</div>
+###  آنالیز این رویداد با دستور ftrace
 
 سپس برای اطلاع دقیق‌تر از روند ovs-vport-send، از دستور ftrace استفاده کردیم. برای اینکار در ضمن برقراری ارتباط بین Namespace ها دستور ftrace را نیز اجرا کردیم. نتایج در تصویر زیر نمایش داده می‌شود:
 
-![](RackMultipart20240109-1-uw5vs1_html_62de287bc01b983c.png)
-
-تصویر 16: نتیجه دستور ftrace برای تابع ovs\_vport\_send
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ftrace_ovs_vport_send.png" alt="ftrace Command" />
+  <figcaption><em>تصویر ftrace تابع ovs_vport_recieve</em></figcaption>
+</figure>
+</div
+<p></p>
 
 که در این قسمت به تفضیل توابع مهمی که داخل این تابع صدا زده می‌شود، پرداخته می شود:
-
+* تابع dev_queue_xmit: این تابع وظیفه ارسال یک بسته از طریق پورت شبکه را بر عهده دارد. در واقع از این تابع برای ارسال Packet به Virtual Port استفاده می شود.
+* تابع __dev_queue_xmit: این تابع برای ورود Packet به صف Port مربوطه است. وظایفی از قبیل Encapsulation و غیره را انجام می دهد. تفاوت این تابع با تابع قبلی در این است که اجازه ارسال Packet به یک صف خاص از Port را می دهد.
+* تابع netdev_core_pick_tx: برای ارسال پکت ابتدا باید صف مورد نظر انتخاب شود، وظیفه انتخاب یک صف ارسال برای ارسال یک بسته از طریق یک port شبکه بر عهده این تابع است. حال باید بسته مراحل Validation را پشت سر بگذارد.
+* تابع validate_xmit_skb: وظیفه Validate کردن پکت های خروجی قبل از ارسال آن ها به کارت شبکه فیزیکی را برعهده دارد.
+* تابع dev_hard_start_xmit:  وظیفه ارسال فوری یک بسته از طریق یک دستگاه شبکه را بر عهده دارد.
+* تابع veth_xmit:  وظیفه ارسال یک بسته از طریق یک دستگاه شبکه مجازی (veth) را بر عهده دارد. در واقع برای ارسال بسته از طریق veth هایی که در قسمت اول ساختیم به کار می رود.
 در ادامه به بررسی نقطه ای که در فضای Runtime، لینوکس پس دریافت بسته، اجرای روند را به OVS می دهد. برای این منظور به سورس کد لینوکس رفته و با جستجوی تابع \_\_netif\_receive\_skb\_core و آنالیز بدنه تابع مربوطه به متغیر rx\_handler رسیدیم که در این جا با استفاده از Switch case مربوطه، بسته را به OVS ارسال می کند. تصویر مربوط به این متغیر را در ذیل قرار دادیم:
 
 
