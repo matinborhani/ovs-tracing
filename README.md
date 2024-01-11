@@ -43,7 +43,15 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 1. پیچیدگی در پیکربندی
 2.  نیاز به دانش فنی خاص برای استفاده بهینه
 
-<p id="chapter2"></p>
+## ساختار OVS
+
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/ovs-struct.jpg" alt="ovs-struct " />
+  <figcaption><em>تصویری از ساختار OVS</em></figcaption>
+</figure>
+</div>
+
 
 # قسمت دوم: معماری  OVS
 در این قسمت به بیان پیش نیازهایی که برای اجرای سناریوها نیاز است، پرداخته می ‏شود. در ادامه به معماری که طرح ریزی شده توضیحاتی ارائه می شود.‏
