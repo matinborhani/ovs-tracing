@@ -286,7 +286,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/perf%2013%20kprobe%20just%20command.png" alt="perf Command" />
   <figcaption><em>دستور perf stat</em></figcaption>
 </figure>
-</div
+</div>
 <p></p>
 
 در ادامه تصویری از نتایج بدست آمده نشان داده میشود.
@@ -309,7 +309,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ftrace_ovs_vport_send.png" alt="ftrace Command" />
   <figcaption><em>تصویر ftrace تابع ovs_vport_recieve</em></figcaption>
 </figure>
-</div
+</div>
 <p></p>
 
 که در این قسمت به تفضیل توابع مهمی که داخل این تابع صدا زده می‌شود، پرداخته می شود:
@@ -319,15 +319,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 * تابع validate_xmit_skb: وظیفه Validate کردن پکت های خروجی قبل از ارسال آن ها به کارت شبکه فیزیکی را برعهده دارد.
 * تابع dev_hard_start_xmit:  وظیفه ارسال فوری یک بسته از طریق یک دستگاه شبکه را بر عهده دارد.
 * تابع veth_xmit:  وظیفه ارسال یک بسته از طریق یک دستگاه شبکه مجازی (veth) را بر عهده دارد. در واقع برای ارسال بسته از طریق veth هایی که در قسمت اول ساختیم به کار می رود.
-در ادامه به بررسی نقطه ای که در فضای Runtime، لینوکس پس دریافت بسته، اجرای روند را به OVS می دهد. برای این منظور به سورس کد لینوکس رفته و با جستجوی تابع \_\_netif\_receive\_skb\_core و آنالیز بدنه تابع مربوطه به متغیر rx\_handler رسیدیم که در این جا با استفاده از Switch case مربوطه، بسته را به OVS ارسال می کند. تصویر مربوط به این متغیر را در ذیل قرار دادیم:
 
-
-<div dir="rtl" style: align="center">
-<figure>
-  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/Source%20Code.png" alt="Joint Kernel and OVS Module" />
-  <figcaption><em>نقطه اتصال کرنل لینوکس به OVS\_MODULE</em></figcaption>
-</figure>
-</div>
 
 ## رویداد ovs_dp_process_packet
 
@@ -372,6 +364,20 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 - تابع ovs\_vport\_send: ارسال بسته از طریق پورت مجازی.
 - تابع dev\_queue\_xmit و \_dev\_queue\_xmit() این توابع برای قرار دادن بسته در صف ارسال دستگاه شبکه و مدیریت ارسال آن هستند.
 - تابع veth\_xmit این تابع مخصوص ارسال بسته‌ها از طریق دستگاه‌های شبکه‌ی مجازی(veth) است.
+
+## اتصال OVS Module به Kernel
+
+در ادامه به بررسی نقطه ای که در فضای Runtime، لینوکس پس دریافت بسته، اجرای روند را به OVS می دهد. برای این منظور به سورس کد لینوکس رفته و با جستجوی تابع \_\_netif\_receive\_skb\_core و آنالیز بدنه تابع مربوطه به متغیر rx\_handler رسیدیم که در این جا با استفاده از Switch case مربوطه، بسته را به OVS ارسال می کند. تصویر مربوط به این متغیر را در ذیل قرار دادیم:
+
+
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/Source%20Code.png" alt="Joint Kernel and OVS Module" />
+  <figcaption><em>نقطه اتصال کرنل لینوکس به OVS\_MODULE</em></figcaption>
+</figure>
+</div>
+
+
 ## مبحث گلوگاه
 
 ### جدول آماری توابع اجرا شده
