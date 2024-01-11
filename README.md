@@ -153,6 +153,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 ## دستور Perf برای سناریو Ping:
 
 سپس در ضمن اجرای دستور ping، اقدام به اجرای دستور perf stat بر روی Kprobe های تعریف شده در قسمت قبل نمودیم که نتیجه این دستور به شرح زیر می‌باشد:
+<p></p>
 <div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/perf_stat_13-kprobes.png" alt="perf with statistical ping request" />
