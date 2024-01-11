@@ -1,11 +1,10 @@
 # ovs-tracing
-
 <div dir="rtl">
+<div style: align="center">
 <figure>
-  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/arch.JPG" alt="Our Architecture" />
-  <figcaption style="display: block; margin-left: auto; margin-right: auto;">Architecture of OVS and Name spaces</figcaption>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/5/59/Open_vSwitch_Logo.svg" alt="OVS Logo" />
 </figure>
-
+</div>
 <p></p>
 
 
@@ -44,50 +43,60 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 2. سپس اقدام به ایجاد چهار Interface شبکه به نام های veth1 و veth2 و veth3 و veth4 کردیم.
 3. سپس Interface با نام veth1 را به Namespace VRF1 و veth3 را به Namespace VRF3 اختصاص دادیم.
 4. سپس به هر Interface یک IP منحصر به فرد در محدوده 10.10.10.255 اختصاص داده شد.
-
+<div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/vrf1_ifconfig.png" alt="Interfaces of VRF1 " />
-  <figcaption>Interface های Namespace به نامVRF1</figcaption>
+  <figcaption><em>Interface های Namespace به نامVRF1</em></figcaption>
 </figure>
+</div>
+
 <p></p>
+<div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/vrf2_ifconfig.png" alt="Interfaces of VRF2 " />
-  <figcaption>Interface‏ های ‏Namespace‏ به نامVRF2 ‎</figcaption>
+  <figcaption><em>Interface‏ های ‏Namespace‏ به نامVRF2 </em>‎</figcaption>
 </figure>
+</div>
 
 
 5. در ادامه با ایجاد یک Virtual Switch و ساخت Bridge بر روی آن، اقدام به برقراری ارتباط بین دو Namespace کردیم. 
-
+<div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/ovs-show.png" alt="OVS Show" />
-  <figcaption>مشاهده اطلاعات Switch مجازی تعریف شده</figcaption>
+  <figcaption><em>مشاهده اطلاعات Switch مجازی تعریف شده</em></figcaption>
 </figure>
-
+</div>
 
 6. برای مثال بین Namespace با نام VRF1 یک بسته ICMP به Namespace با نام VRF2 ارسال کردیم.
-
+<div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ping_initial.png" alt="Send ICMP Packet from VRF1 to FRM2" />
-  <figcaption>ارسال بسته با استفاده از ‏Namespace‏ با نام ‏VRF1‎‏ به ‏VRF2‎‏ با آدرس 10.10.10.2‏</figcaption>
+  <figcaption><em>ارسال بسته با استفاده از ‏Namespace‏ با نام ‏VRF1‎‏ به ‏VRF2 ‎‏ با آدرس 10.10.10.2‏</em></figcaption>
 </figure>
+</div>
 <p></p>
+<div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/ifconfig.JPG" alt="Interface of Machine" />
-  <figcaption>Interface‏ های ساخته شدهF1</figcaption>
+  <figcaption><em>Interface‏ های ساخته شدهF1</em></figcaption>
 </figure>
+</div>
 <p></p>
+<div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/namespace_commands.JPG" alt="Overview of Commands" />
-  <figcaption>نگاه کلی به دستورات</figcaption>
+  <figcaption><em>نگاه کلی به دستورات</em></figcaption>
 </figure>
+</div>
 
 
 ## معماری Namespace و OVS:
-
+<div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/arch.JPG" alt="Architecture" />
-  <figcaption>معماری ‏OVS</figcaption>
+  <figcaption><em>‏معماری OVS</em></figcaption>
 </figure>
+</div>
 
 
 # قسمت دوم: سناریوی Ping
@@ -95,34 +104,39 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 ## مقدمات سناریو Ping:
 
 در ابتدا با استفاده از Name Space های ساخته شده در قسمت قبل، اقدام به ping کردن VRF1 و VRF2 کردیم. که در شکل زیر مشهود است:
-
+<div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ping_initial.png" alt="Send ICMP Reqeust from VRF1 to VRF2" />
-  <figcaption>ارسال دستور ICMP از طریق VRF1 به VRF2</figcaption>
+  <figcaption><em>ارسال دستور ICMP از طریق VRF1 به VRF2</em></figcaption>
 </figure>
+</div>
 
 
 ## برای آشنایی با Function هایی که در زمان اجرای دستور ping صدا زده می شوند:
 
 برای پی بردن به Function های مهم ovs در ابتدا یک بار دستور perf را به صورت عادی اجرا کرده و بار دیگر دستور perf را حین سناریو ping اجرا کردیم. در ادامه عکس های زیر که بخشی از نتایج بدست آمده است، نشان داده می‌شود.
-
+<div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/With%20Ping(perf).png" alt="perf with ping request" />
-  <figcaption>پاره ای از توابع صدا زده شده در حین اجرای ping</figcaption>
+  <figcaption><em>پاره ای از توابع صدا زده شده در حین اجرای ping</em></figcaption>
 </figure>
+</div>
 <p></p>
+<div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/no%20Ping(perf).png" alt="perf without ping request" />
-  <figcaption>پاره ای از توابع صدا زده شده بدون اجرای ping</figcaption>
+  <figcaption><em>پاره ای از توابع صدا زده شده بدون اجرای ping</em></figcaption>
 </figure>
+</div>
 <p> فایل کامل خروجی دستورات در پوشه artifacts موجود می باشد.</p>
 
 در نهایت با مقایسه نتایج این دو عملیات، توابعی که تنها در حین سناریو Ping صدا زده می شوند، یافت شد. (توابع بر اساس Hit مرتب شده اند):
-
+<div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/function-WithPing.png" alt="Unique Function With Ping" />
-  <figcaption>توابع مختص سناریو Ping</figcaption>
+  <figcaption><em>توابع مختص سناریو Ping</em></figcaption>
 </figure>
+</div>
 
 
 با توجه به نتایج بدست آمده در ادامه تمرکز خود را بر روی 13 رخدادی که در شکل مشخص شده و بیشترین تعداد فراخوانی را داشته اند، منعطف کردیم.
@@ -130,18 +144,22 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 ## ایجاد kprobeهای اختصاصی
 
 در ابتدا به علت نبود Event و یا Trace Point بر روی Kernel Module OVS، اقدام به تعریف کردن Kprobe بر روی Function های مرتبط با OVS که در قسمت بالا مطرح کردیم. لیست مورد نظر به شرح زیر می باشد:
-
-![](RackMultipart20240109-1-uw5vs1_html_97af7073c624a2fb.png)
-
-تصویر 12: لیست Kprobes های تعریف شده
-
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/Defination%2013%20Kprobes(New%20Version).png" alt="List Kprobes" />
+  <figcaption><em>لیست Kprobes های تعریف شده</em></figcaption>
+</figure>
+</div>
 ## دستور Perf برای سناریو Ping:
 
 سپس در ضمن اجرای دستور ping، اقدام به اجرای دستور perf stat بر روی Kprobe های تعریف شده در قسمت قبل نمودیم که نتیجه این دستور به شرح زیر می‌باشد:
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/perf_stat_13-kprobes.png" alt="perf with statistical ping request" />
+  <figcaption><em>اطلاعات آماری با kprobe های تعریف شده با استفاده از دستور perf</em></figcaption>
+</figure>
+</div>
 
-![](RackMultipart20240109-1-uw5vs1_html_719fdbd0b11fcdea.png)
-
-تصویر 13: مشاهده اطلاعات آماری Event های صدا زده شده در دستور perf
 
 پس از بررسی و آنالیز صورت گرفته Event های زیر را بدست آوردیم:
 
@@ -154,9 +172,14 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 ## رویداد ovs\_vport\_send:
 
-ابتدا اقدام به تهیه Call Stack با استفاده از دستور perf کردیم که دستور آن در تصویر پایین بدست آمد: ![](RackMultipart20240109-1-uw5vs1_html_8254e7adaad3fa83.png)
+ابتدا اقدام به تهیه Call Stack با استفاده از دستور perf کردیم که دستور آن در تصویر پایین بدست آمد:
 
-تصویر 14: دستور perf stat
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/perf%2013%20kprobe%20just%20command.png" alt="perf Command" />
+  <figcaption><em>دستور perf stat</em></figcaption>
+</figure>
+</div
 
 در ادامه تصویری از نتایج بدست آمده نشان داده میشود.
 
@@ -174,9 +197,13 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 در ادامه به بررسی نقطه ای که در فضای Runtime، لینوکس پس دریافت بسته، اجرای روند را به OVS می دهد. برای این منظور به سورس کد لینوکس رفته و با جستجوی تابع \_\_netif\_receive\_skb\_core و آنالیز بدنه تابع مربوطه به متغیر rx\_handler رسیدیم که در این جا با استفاده از Switch case مربوطه، بسته را به OVS ارسال می کند. تصویر مربوط به این متغیر رادر ذیل قرار دادیم:
 
-![](RackMultipart20240109-1-uw5vs1_html_4d76a1a922519de2.png)
 
-تصویر 17:نقطه اتصال کرنل لینوکس به OVS\_MODULE
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/Source%20Code.png" alt="Joint Kernel and OVS Module" />
+  <figcaption><em>نقطه اتصال کرنل لینوکس به OVS\_MODULE</em></figcaption>
+</figure>
+</div
 
  |
 | --- |
