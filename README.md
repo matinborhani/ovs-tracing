@@ -3,7 +3,7 @@
 <div dir="rtl">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/arch.JPG" alt="Our Architecture" />
-  <figcaption>Architecture of OVS and Name spaces</figcaption>
+  <figcaption style="display: block; margin-left: auto; margin-right: auto;">Architecture of OVS and Name spaces</figcaption>
 </figure>
 
 <p></p>
