@@ -49,7 +49,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/vrf1_ifconfig.png" alt="Interfaces of VRF1 " />
   <figcaption>Interface های Namespace به نامVRF1</figcaption>
 </figure>
-
+<p></p>
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/vrf2_ifconfig.png" alt="Interfaces of VRF2 " />
   <figcaption>Interface‏ های ‏Namespace‏ به نامVRF2 ‎</figcaption>
@@ -70,13 +70,12 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ping_initial.png" alt="Send ICMP Packet from VRF1 to FRM2" />
   <figcaption>ارسال بسته با استفاده از ‏Namespace‏ با نام ‏VRF1‎‏ به ‏VRF2‎‏ با آدرس 10.10.10.2‏</figcaption>
 </figure>
-
+<p></p>
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/ifconfig.JPG" alt="Interface of Machine" />
   <figcaption>Interface‏ های ساخته شدهF1</figcaption>
 </figure>
-
-
+<p></p>
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/OVS/namespace_commands.JPG" alt="Overview of Commands" />
   <figcaption>نگاه کلی به دستورات</figcaption>
