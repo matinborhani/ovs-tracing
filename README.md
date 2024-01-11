@@ -96,27 +96,34 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 در ابتدا با استفاده از Name Space های ساخته شده در قسمت قبل، اقدام به ping کردن VRF1 و VRF2 کردیم. که در شکل زیر مشهود است:
 
-![](RackMultipart20240109-1-uw5vs1_html_ba58330bb234ce40.png)
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ping_initial.png" alt="Send ICMP Reqeust from VRF1 to VRF2" />
+  <figcaption>ارسال دستور ICMP از طریق VRF1 به VRF2</figcaption>
+</figure>
 
-تصویر 8: ارسال دستور ICMP از طریق VRF1 به VRF2
 
 ## برای آشنایی با Function هایی که در زمان اجرای دستور ping صدا زده می شوند:
 
 برای پی بردن به Function های مهم ovs در ابتدا یک بار دستور perf را به صورت عادی اجرا کرده و بار دیگر دستور perf را حین سناریو ping اجرا کردیم. در ادامه عکس های زیر که بخشی از نتایج بدست آمده است، نشان داده می‌شود.
 
-![](RackMultipart20240109-1-uw5vs1_html_316118507106cc44.png)
-
-تصویر 9: پاره ای از توابع که در حین سناریو Ping صدا زده می شوند
-
-![](RackMultipart20240109-1-uw5vs1_html_1cb75d2f7b92002b.png)
-
-تصویر 10: پاره ای از توابع که بدون سناریو Ping صدا زده می شوند
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/With%20Ping(perf).png" alt="perf with ping request" />
+  <figcaption>پاره ای از توابع صدا زده شده در حین اجرای ping</figcaption>
+</figure>
+<p></p>
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/no%20Ping(perf).png" alt="perf without ping request" />
+  <figcaption>پاره ای از توابع صدا زده شده بدون اجرای ping</figcaption>
+</figure>
+<p> فایل کامل خروجی دستورات در پوشه artifacts موجود می باشد.</p>
 
 در نهایت با مقایسه نتایج این دو عملیات، توابعی که تنها در حین سناریو Ping صدا زده می شوند، یافت شد. (توابع بر اساس Hit مرتب شده اند):
 
-![](RackMultipart20240109-1-uw5vs1_html_c2f64bd155c8218c.png)
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/function-WithPing.png" alt="Unique Function With Ping" />
+  <figcaption>توابع مختص سناریو Ping</figcaption>
+</figure>
 
-تصویر 11: توابع مختص سناریو Ping
 
 با توجه به نتایج بدست آمده در ادامه تمرکز خود را بر روی 13 رخدادی که در شکل مشخص شده و بیشترین تعداد فراخوانی را داشته اند، منعطف کردیم.
 
