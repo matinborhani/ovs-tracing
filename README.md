@@ -177,8 +177,8 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 <p></p>
 <div dir="rtl" style: align="center">
 <figure>
-  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/perf_stat_13-kprobes.png" alt="perf with statistical ping request" />
-  <figcaption><em>اطلاعات آماری با kprobe های تعریف شده با استفاده از دستور perf</em></figcaption>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ftrace_ovs_dp_proccess_packet.png" alt="ftrace dp_packet" />
+  <figcaption><em>تصویری از ftrace dp_packet_pro </em></figcaption>
 </figure>
 </div>
 
@@ -300,7 +300,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 که در این قسمت به تفضیل توابع مهمی که داخل این تابع صدا زده می‌شود، پرداخته می شود:
 
-در ادامه به بررسی نقطه ای که در فضای Runtime، لینوکس پس دریافت بسته، اجرای روند را به OVS می دهد. برای این منظور به سورس کد لینوکس رفته و با جستجوی تابع \_\_netif\_receive\_skb\_core و آنالیز بدنه تابع مربوطه به متغیر rx\_handler رسیدیم که در این جا با استفاده از Switch case مربوطه، بسته را به OVS ارسال می کند. تصویر مربوط به این متغیر رادر ذیل قرار دادیم:
+در ادامه به بررسی نقطه ای که در فضای Runtime، لینوکس پس دریافت بسته، اجرای روند را به OVS می دهد. برای این منظور به سورس کد لینوکس رفته و با جستجوی تابع \_\_netif\_receive\_skb\_core و آنالیز بدنه تابع مربوطه به متغیر rx\_handler رسیدیم که در این جا با استفاده از Switch case مربوطه، بسته را به OVS ارسال می کند. تصویر مربوط به این متغیر را در ذیل قرار دادیم:
 
 
 <div dir="rtl" style: align="center">
@@ -308,7 +308,34 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/Source%20Code.png" alt="Joint Kernel and OVS Module" />
   <figcaption><em>نقطه اتصال کرنل لینوکس به OVS\_MODULE</em></figcaption>
 </figure>
-</div
+</div>
+
+## رویداد ovs_dp_process_packet
+شکل زیر Call Stack مربوط به این رویداد را نشان میدهد. اینtrace از توابع نشان‌دهنده‌ی مراحل پردازش یک بسته شبکه‌ای درOpen vSwitch (OVS) و هسته‌ی لینوکس است. هر یک از این توابع نقش مشخصی در این فرآیند دارند:
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ftrace_ovs_dp_proccess_packet.png" alt="ftrace ovs_dp_process_packet" />
+  <figcaption><em>تصویری از ftrace ovs_dp_packet_packet</em></figcaption>
+</figure>
+</div>
+
+- تابع ovs\_dp\_process\_packetاین تابع برای پردازش بسته‌ها درdatapath یا همان مسیر دادهOVS فراخوانی می‌شود.
+- skb\_get\_hash این تابع هش بسته‌ی شبکه‌ای را برای مسیریابی و تعادل‌بندی بار محاسبه می‌کند.
+- تابع \_skb\_flow\_dissectاین تابع بسته‌ها را تجزیه و تحلیل می‌کند تا اطلاعات لازم برای محاسبه‌ی هش را بدست آورد.
+- تابع ovs\_flow\_tbl\_lookup\_statsجستجو در جدول جریانOVS برای یافتن یک جریان مطابق با بسته و به‌روزرسانی آمار آن.
+- تابع flow\_lookup.constprop.0: این زیرتابع به دنبال یافتن جریان موردنظر در جدول است.
+- تابع masked\_flow\_lookupجستجوی جریان با استفاده از یک ماسک.
+- تابع find\_bucket.isra.0: یافتن باکت مرتبط در جدول هش جریان.
+- تابع ovs\_flow\_stats\_update: به‌روزرسانی آمار جریان مرتبط با بسته.
+- تابع \_raw\_spin\_lock قفل کردن برای جلوگیری از دسترسی همزمان به داده‌ها.
+- تابع ovs\_execute\_actions: اجرای اقدامات تعریف شده برای بسته.
+- تابع do\_execute\_actions: اجرای اقدامات مشخص شده.
+- تابع do\_output: ارسال بسته به مقصد نهایی.
+- تابع ovs\_lookup\_vport: یافتن پورت مجازی مقصد.
+- تابع ovs\_vport\_send: ارسال بسته از طریق پورت مجازی.
+- تابع dev\_queue\_xmit و \_dev\_queue\_xmit() این توابع برای قرار دادن بسته در صف ارسال دستگاه شبکه و مدیریت ارسال آن هستند.
+- تابع veth\_xmit این تابع مخصوص ارسال بسته‌ها از طریق دستگاه‌های شبکه‌ی مجازی(veth) است.
+
 
  |
 | --- |
