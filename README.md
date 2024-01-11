@@ -91,10 +91,10 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 
 ## معماری Namespace و OVS:
-<div dir="rtl" style: align="center">
+<div dir="rtl" style= "align:center; ">
 <figure>
-  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/arch.JPG" alt="Architecture" />
-  <figcaption><em>‏معماری OVS</em></figcaption>
+  <img  style="display:block" src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/arch.JPG" alt="Architecture"/>
+  <figcaption style="display:block"><em>‏معماری OVS</em></figcaption>
 </figure>
 </div>
 
