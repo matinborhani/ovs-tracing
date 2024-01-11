@@ -214,8 +214,8 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 <p></p>
 <div dir="rtl" style: align="center">
 <figure>
-  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ftrace_ovs_dp_proccess_packet.png" alt="ftrace dp_packet" />
-  <figcaption><em>تصویری از ftrace dp_packet_pro </em></figcaption>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/perf_stat_13-kprobes.png" alt="perf_stat_13-kprobes" />
+  <figcaption><em>تصویری از دستور perf بر روی kprobeهای تعریف شده</em></figcaption>
 </figure>
 </div>
 
