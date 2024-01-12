@@ -193,7 +193,9 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 <div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/function-WithPing.png" alt="Unique Function With Ping" />
-  <figcaption><em>توابع مختص سناریو Ping</em></figcaption>
+
+  *توابع مختص سناریو Ping*
+  
 </figure>
 </div>
 
@@ -301,7 +303,9 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 <div style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ftrace_ovs_vport_recieve.png" alt="ftrace vport recieving" />
-  <figcaption><em>تصویر ftrace تابع ovs_vport_recieve</em></figcaption>
+
+
+  *تصویر ftrace تابع ovs_vport_recieve*
 </figure>
 </div>
 
@@ -400,7 +404,8 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 <div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ftrace_ovs_dp_proccess_packet.png" alt="ftrace ovs_dp_process_packet" />
-  <figcaption><em>تصویری از ftrace ovs_dp_packet_packet</em></figcaption>
+
+  *تصویری از ftrace ovs_dp_packet_packet*
 </figure>
 </div>
 
@@ -429,7 +434,8 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 <div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/Source%20Code.png" alt="Joint Kernel and OVS Module" />
-  <figcaption><em>نقطه اتصال کرنل لینوکس به OVS\_MODULE</em></figcaption>
+  
+  *نقطه اتصال کرنل لینوکس به OVS\_MODULE*
 </figure>
 </div>
 
