@@ -148,10 +148,12 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 
 ## معماری Namespace و OVS پیاده سازی شده در پروژه:
- <div dir="rtl" style= "align:center; ">
+ <div dir="rtl" style: align="center">
 <figure>
   <img  style="display:block" src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/arch.JPG" alt="Architecture"/>
-  <figcaption style="display:block"><em>‏معماری OVS</em></figcaption>
+<!--   <figcaption style="display:block"><em>‏معماری OVS</em></figcaption> -->
+  
+  *معماری OVS*
 </figure>
 </div>
 
@@ -204,7 +206,9 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 <div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/Defination%2013%20Kprobes(New%20Version).png" alt="List Kprobes" />
-  <figcaption><em>لیست Kprobes های تعریف شده</em></figcaption>
+<!--   <figcaption><em>لیست Kprobes های تعریف شده</em></figcaption> -->
+  
+  *لیست Kprobes های تعریف شده*
 </figure>
 </div>
 
