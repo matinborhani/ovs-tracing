@@ -316,7 +316,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 <div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ftrace_ovs_vport_send.png" alt="ftrace Command" />
-  <figcaption><em>تصویر ftrace تابع ovs_vport_recieve</em></figcaption>
+  <figcaption><em>تصویر ftrace تابع ovs_vport_send</em></figcaption>
 </figure>
 </div>
 <p></p>
