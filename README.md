@@ -140,21 +140,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 </figure>
 </div>
 
-
-# قسمت سوم: سناریوی Ping
-
-## راه اندازی سناریو Ping:
-
-در ابتدا با استفاده از Name Space های ساخته شده در قسمت قبل، اقدام به ping کردن VRF1 و VRF2 کردیم. که در شکل زیر مشهود است:
-<div dir="rtl" style: align="center">
-<figure>
-  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ping_initial.png" alt="Send ICMP Reqeust from VRF1 to VRF2" />
-  <figcaption><em>ارسال دستور ICMP از طریق VRF1 به VRF2</em></figcaption>
-</figure>
-</div>
-
-
-##  استخراج Function های صدا زده در حین اجرای دستور ping :
+##  استخراج Function های صدا زده در حین اجرای دستور  ping و netcat :
 
 برای پی بردن به Function های مهم ovs در ابتدا یک بار دستور perf را به صورت عادی اجرا کرده و بار دیگر دستور perf را حین سناریو ping اجرا کردیم. در ادامه عکس های زیر که بخشی از نتایج بدست آمده است، نشان داده می‌شود.
 <div dir="rtl" style: align="center">
@@ -181,9 +167,6 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
   
 </figure>
 </div>
-
-
-با توجه به نتایج بدست آمده در ادامه تمرکز خود را بر روی 13 رخدادی که در شکل مشخص شده و بیشترین تعداد فراخوانی را داشته اند، منعطف کردیم.
 
 ## تعریف kprobe:
 
@@ -217,6 +200,24 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 - vs\_flow\_cmd\_dump
 
 در ادامه گزارش به بررسی هر یک از رویدادها می پردازیم.
+
+
+# قسمت سوم: سناریوی Ping
+
+## راه اندازی سناریو Ping:
+
+در ابتدا با استفاده از Name Space های ساخته شده در قسمت قبل، اقدام به ping کردن VRF1 و VRF2 کردیم. که در شکل زیر مشهود است:
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ping_initial.png" alt="Send ICMP Reqeust from VRF1 to VRF2" />
+  <figcaption><em>ارسال دستور ICMP از طریق VRF1 به VRF2</em></figcaption>
+</figure>
+</div>
+
+
+
+با توجه به نتایج بدست آمده در ادامه تمرکز خود را بر روی 13 رخدادی که در شکل مشخص شده و بیشترین تعداد فراخوانی را داشته اند، منعطف کردیم.
+
 
 
 ## رویداد ovs_vport_recieve
