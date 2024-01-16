@@ -357,17 +357,17 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 ## رویداد OVS\_flow\_cmd\_dump:
 
-این رویداد برای نمایش OVS Flow table که در قسمت ساختار OVS توضیح داده شده است، بکار می رود. در واقع بسته ping به OVS می رسد باید برا اساس یک Entry از Flow Table شناسایی شود (یا اگر اولین بار است، ایجاد شود) و براساس اون Action مورد نظر انتخاب شود.
+این رویداد برای نمایش OVS Flow table که در قسمت ساختار OVS توضیح داده شده است، بکار می رود. هنگامی که بسته ping به OVS می رسد باید بر اساس یک Entry از Flow Table شناسایی شود (یا اگر برای نخستین بار است، ایجاد شود) و براساس آن، Action مورد نظر انتخاب شود.
 
-در همین ابتدای کار بهتر است توضیحی در مورد [Generic Netlink](https://docs.kernel.org/networking/generic_netlink.html)داده شود. در واقع این Generic Netlink که مکانیسمی انعطاف پذیر برای Kernel است که بتواند بین Process های داخل Kernel و با Process های User-Space ارتباط برقرار کند. این مکانیسم جایگزین روش قبلی که IOCTL نامیده میشده است، شد.
+در همین ابتدای کار بهتر است توضیحی در مورد [ Generic Netlink ](https://docs.kernel.org/networking/generic_netlink.html) داده شود. در واقع این Generic Netlink که مکانیسمی انعطاف پذیر برای Kernel است که بتواند بین Process های داخل Kernel و با Process های User-Space ارتباط برقرار کند. این مکانیسم جایگزین روش قبلی که IOCTL نامیده میشده است، شد.
 
-همان طور که در تصویر ساختار OVS مشهود است، در OVS\_flow\_cmd\_dump به علت اینکه Flow Table داخل Kernel Space قرار دارد و Tread Hanlder ها در User Space، از مکانیزم Netlink بسیار استفاده می شود.
+همان طور که در تصویر ساختار OVS مشهود است، در OVS\_flow\_cmd\_dump به علت اینکه Flow Table داخل Kernel Space قرار دارد و [ Thread Hanlder ](https://man7.org/linux/man-pages/man2/ioctl.2.html) ها در User Space، از مکانیزم Netlink بسیار استفاده می شود.
 
 در ادامه با استفاده از ابزارهای perf و ftrace به تحلیل این رویداد می پردازیم.
 
 ### تحلیل رویداد flow\_cmd\_dump با استفاده از perf:
 
-به منظور بررسی این رویداد همچون رویداد ovs\_vport\_send ابتدا با استفاده از دستور perf، یک call stack از آن تهیه کردیم.
+به منظور بررسی این رویداد همچون رویداد flow\_cmd\_dump ابتدا با استفاده از دستور perf، یک call stack از آن تهیه کردیم.
 
 <div dir="rtl" style: align="center">
 <figure>
