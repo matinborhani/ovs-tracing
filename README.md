@@ -10,6 +10,7 @@
 <p></p>
 
 # قسمت اول: کلیات OVS 
+در این فصل به توضیحاتی در مورد OVS داده می شود و در ادامه نقاط قوت و ضعف آن آشکار می شود. درنهایت به صورت موجز در مورد ساختار OVS توضیح داده شده است
 
 ## توضیح مختصر در مورد OVS:
 <div dir="rtl">
@@ -31,7 +32,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 <div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/ovs-struct.jpg" alt="ovs-struct " />
-  <figcaption><em>تصویری از ساختار OVS</em></figcaption>
+  <figcaption><em> ساختار OVS</em></figcaption>
 </figure>
 </div>
 
@@ -585,7 +586,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 .
  
- # نتیجه گیری و تحلیل گلوگاه OVS
+ # قسمت پنجم: نتیجه گیری و تحلیل گلوگاه OVS
  
 
  |
