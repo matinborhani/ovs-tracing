@@ -344,6 +344,53 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 ابتدا بسته ورودی توسط تابع skb\_get\_hash  هش می شود تا بر اساس آن در جدول جریان جستجو شود. اگر بسته در جدول جریان یافت شود، تابع \_skb\_flow\_dissect اطلاعات مربوط به جریان را از بسته استخراج می کند. این اطلاعات سپس توسط تابع ovs\_flow\_tbl\_lookup\_stats  برای به روزرسانی آمار جریان استفاده می شود. اگر بسته در جدول جریان یافت شد تابع ovs\_execute\_actions  اقدامات مربوط به جریان را بر روی بسته ورودی اجرا می کند .این اقدامات می تواند شامل تغییر آدرس مقصد، تغییر شماره پورت مقصد یا ارسال بسته به پورت دیگری باشد .سپس، تابع ovs\_lookup\_vportپورت خروجی را برای بسته خروجی بر اساس شناسه جریان جستجو می کند.در نهایت، تابع ovs\_vport\_sendبسته خروجی را به پورت خروجی ارسال می کند. این کار توسط توابع داخلی dev\_queue\_xmitیا \_dev\_queue\_xmitانجام می شود.
 
+## رویداد OVS\_flow\_cmd\_dump:
+
+این رویداد برای نمایش OVS Flow table که در قسمت ساختار OVS توضیح داده شده است، بکار می رود. در واقع بسته ping به OVS می رسد باید برا اساس یک Entry از Flow Table شناسایی شود (یا اگر اولین بار است، ایجاد شود) و براساس اون Action مورد نظر انتخاب شود.
+
+در همین ابتدای کار بهتر است توضیحی در مورد [Generic Netlink](https://docs.kernel.org/networking/generic_netlink.html)داده شود. در واقع این Generic Netlink که مکانیسمی انعطاف پذیر برای Kernel است که بتواند بین Process های داخل Kernel و با Process های User-Space ارتباط برقرار کند. این مکانیسم جایگزین روش قبلی که IOCTL نامیده میشده است، شد.
+
+همان طور که در تصویر ساختار OVS مشهود است، در OVS\_flow\_cmd\_dump به علت اینکه Flow Table داخل Kernel Space قرار دارد و Tread Hanlder ها در User Space، از مکانیزم Netlink بسیار استفاده می شود.
+
+در ادامه با استفاده از ابزارهای perf و ftrace به تحلیل این رویداد می پردازیم.
+
+### تحلیل رویداد flow\_cmd\_dump با استفاده از perf:
+
+به منظور بررسی این رویداد همچون رویداد ovs\_vport\_send ابتدا با استفاده از دستور perf، یک call stack از آن تهیه کردیم.
+
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/perf%20ovs_flow_cmd_dump.png" alt="perf ovs_flow_cmd_fill_stats" />
+
+  *تصویری از perf ovs_flow_cmd_fill_stats*
+</figure>
+</div>
+
+
+- تابع \_\_netlink\_dump\_start: این تابع بخشی از API مربوط به ارتباط بین Kernel و UserSpace است. در دستور ping، اطلاعات Flow Table را از Kernel به User Space می برد.
+- تابع genl\_family\_rcv\_msg: این تابع بخشی از مکانیزم Generic Handle که وظیفه این تابع پردازش اطلاعات دریافتی از User-space است.
+- تابع netlink\_rcv\_skb: این تابع نیز بخشی از Generic Handle است که اولین تابعی است که موقع دریافت پیام از User Space، یک Socket Buffer دریافت می کند و Message داخلش از User Space است.
+
+### تحلیل رویداد flow\_cmd\_dump با استفاده از ftrace:
+
+شکل زیر Call Stack مربوط به این رویداد را نشان میدهد.
+<div dir="rtl" style: align="center">
+<figure>
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/ftrace%20ovs_flow_cmd_dump.png" alt="ftrace ovs_flow_cmd_fill_stats" />
+
+  *تصویری از ftrace ovs_flow_cmd_fill_stats*
+</figure>
+</div>
+
+
+- تابع ovs\_flow\_tbl\_dump\_next: وقتی تابع flow\_cmd\_dump صدا زده میشود، برای iterate کردن روی Flow Table از این تابع استفاده می شود. در واقع با این تابع سطر بعدی Flow Table خوانده می شود.
+- تابع ovs\_flow\_cmd\_fill\_info: این تابع وظیفه Dump کردن اطلاعات به سطرهای Flow Table را برعهده دارد. هر سطر Flow Table اطلاعات زیادی نظیر Condition ها، Actionها و اطلاعات آماری را شامل می شود.
+
+همچنین دریافت اطلاعات هر ردیف Flow Table و ارسال به User Space نیز برعهده دارد.
+
+- تابع ovs\_flow\_cmd\_fill\_stats: همان طور که در قسمت قبل توضیح داده شد، هر ردیف از Flow Table خود دارای قسمت های متعددی از جمله اطلاعات آماری است که این تابع وظیفه Dump کردن این اطلاعات آماری را برعهده دارد.
+- 
+
 ## اتصال OVS Module به Kernel
 
 در ادامه به بررسی نقطه ای که در فضای Runtime، لینوکس پس دریافت بسته، اجرای روند را به OVS می دهد. برای این منظور به سورس کد لینوکس رفته و با جستجوی تابع \_\_netif\_receive\_skb\_core و آنالیز بدنه تابع مربوطه به متغیر rx\_handler رسیدیم که در این جا با استفاده از Switch case مربوطه، بسته را به OVS ارسال می کند. تصویر مربوط به این متغیر را در ذیل قرار دادیم:
