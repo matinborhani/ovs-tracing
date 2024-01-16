@@ -411,7 +411,7 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 <div dir="rtl" style: align="center">
 <figure>
-  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Netcat%20Scenario/Netcat%20Command%20Between%20Two%20Namespace.png" alt="Netcat Command " />
+  <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Netcat%20Scenario/Netcat%2013%20Kprobes.png" alt="Kprobes Defined " />
   <figcaption><em>Kprobe‏ های تعریف شده</em></figcaption>
 </figure>
 </div>
@@ -433,6 +433,30 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 به‌طورکلی، هر چه تعداد ورودی‌های جدول flow بیشتر باشد، زمان پردازش تابع ovs\_flow\_cmd\_dump بیشتر است؛ بنابراین، زمانی که بین دو تا namespace در ovs ارتباط netcat برقرار می‌کنیم، تابع ovs\_flow\_cmd\_dump زمان بیشتری را صرف می‌کند و این زمان به نسبت به زمانی که ping می‌زنیم بین این دو namespace کمتر است.
 
+
+
+## مبحث گلوگاه
+
+### جدول آماری توابع اجرا شده در سناریوی netcat
+
+<div align="center">
+<p><em>جدول آماری زمان اجرای توابع</em></p>
+  
+|            Func           |    MAX   |   MIN  |   AVG   |
+|:-------------------------:|:--------:|:------:|:-------:|
+|     ovs_vport_receive     |  204.512 | 13.262 |  65.088 |
+|   ovs_dp_process_packet   |  186.358 | 10.569 |  52.591 |
+|       ovs_vport_send      |  33.389  |  3.042 |  14.77  |
+|    ovs_flow_key_extract   |  57.011  |  1.857 |  10.19  |
+| ovs_flow_tbl_lookup_stats |   8.16   |  1.224 |  4.391  |
+|      ovs_ct_fill_key      |   3.262  |  0.651 |  1.833  |
+|       ovs_dp_cmd_get      |  1181.30 | 34.103 |  319.43 |
+|     ovs_flow_cmd_dump     | 2713.895 |  3.935 | 456.165 |
+|   ovs_flow_stats_update   |   4.306  |  0.554 |  1.813  |
+|     ovs_ct_update_key     |   1.159  |  0.238 |  0.420  |
+|      ovs_lookup_vport     |   0.571  |  0.227 |  0.292  |
+
+</div>
 در سناریوی netcatنیز، گلوگاه ovs در تابع ovs\_dp\_process\_packet قرار دارد که میانگین زمان پردازش آن 52.591 میکروثانیه است. این مقدار نسبتاً بالا است و می‌تواند باعث کاهش عملکرد OVS شود.
 
 سایر توابع نیز زمان پردازش قابل‌توجهی دارند، اما میانگین زمان پردازش آن‌ها کمتر از ovs\_dp\_process\_packet است. به‌عنوان‌مثال، میانگین زمان پردازش تابع ovs\_vport\_receive
@@ -463,6 +487,9 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 - بهینه‌سازی کد تابع: می‌توان کد تابع ovs\_flow\_cmd\_dump را بهینه‌سازی کرد تا از منابع سخت‌افزاری به‌طور کارآمدتر استفاده کند. این کار می‌تواند شامل استفاده از الگوریتم‌های سریع‌تر، حذف کدهای غیرضروری و استفاده از ساختارهای داده کارآمدتر باشد.
 
 با توجه به این راهکارها، می‌توان زمان پردازش تابع ovs\_flow\_cmd\_dump را کاهش داد.
+
+.
+ ### نتیجه گیری و تحلیل گلوگاه OVS
 
  |
 | --- |
