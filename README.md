@@ -142,11 +142,11 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 
 ##  استخراج Function های صدا زده در حین اجرای دستور  ping و netcat :
 
-برای پی بردن به Function های مهم ovs در ابتدا یک بار دستور perf را به صورت عادی اجرا کرده و بار دیگر دستور perf را حین سناریو ping اجرا کردیم. در ادامه عکس های زیر که بخشی از نتایج بدست آمده است، نشان داده می‌شود.
+برای پی بردن به Function های مهم ovs در ابتدا یک بار دستور perf را به صورت عادی اجرا کرده و بار دیگر دستور perf را حین سناریو ping و netcat اجرا کردیم. در ادامه عکس های زیر که بخشی از نتایج بدست آمده است، نشان داده می‌شود.
 <div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/With%20Ping(perf).png" alt="perf with ping request" />
-  <figcaption><em>پاره ای از توابع صدا زده شده در حین اجرای ping</em></figcaption>
+  <figcaption><em>پاره ای از توابع صدا زده شده در حین اجرای ping و netcat</em></figcaption>
 </figure>
 </div>
 <p></p>
@@ -158,12 +158,12 @@ Open vSwitch یا به اختصار OVS، یک پیاده‌سازی منبع ب
 </div>
 <p> فایل کامل خروجی دستورات در پوشه artifacts موجود می باشد.</p>
 
-در نهایت با مقایسه نتایج این دو عملیات، توابعی که تنها در حین سناریو Ping صدا زده می شوند، یافت شد. (توابع بر اساس Hit مرتب شده اند):
+در نهایت با مقایسه نتایج این دو عملیات، توابعی که تنها در حین سناریو Ping و netcat صدا زده می شوند، یافت شد. (توابع بر اساس Hit مرتب شده اند):
 <div dir="rtl" style: align="center">
 <figure>
   <img src="https://github.com/matinborhani/ovs-tracing/blob/main/screenshots/Ping%20Scenario/function-WithPing.png" alt="Unique Function With Ping" />
 
-  *توابع مختص سناریو Ping*
+  *توابع مختص سناریو Ping و netcat*
   
 </figure>
 </div>
